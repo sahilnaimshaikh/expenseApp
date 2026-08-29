@@ -1,0 +1,40 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+*.freezed.dart
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+pubspec.lock
+
+# Isar
+*.isar
+*.isar.lock
+# Isar model .g.dart files are committed (not gitignored): isar_generator's
+# analyzer constraint (<6.0.0) is incompatible with glados/test's (>=8.0.0)
+# in the same pubspec, so both can't be dev_dependencies together. To
+# regenerate: temporarily remove glados, add back isar_generator+build_runner,
+# run `dart run build_runner build --delete-conflicting-outputs`, then revert.
+
+# Isar native library downloaded for host-side `flutter test` runs (not
+# needed by isar_flutter_libs on-device/emulator; see build-and-test-summary.md)
+/libisar.dylib
+/libisar.so
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Platform build outputs (added when platform folders are generated)
+android/
+ios/
+macos/
+linux/
+windows/
+web/
+
+# OS
+.DS_Store
