@@ -29,7 +29,6 @@ pubspec.lock
 *.iml
 
 # Platform build outputs (added when platform folders are generated)
-android/
 ios/
 macos/
 linux/
