@@ -1,0 +1,46 @@
+name: Flutter Build APK
+
+# This tells GitHub when to run the automation
+on:
+  push:
+    branches: [ "main" ] # Runs automatically when you push code to the main branch
+  workflow_dispatch:     # Enables a manual "Run" button in the GitHub dashboard
+
+jobs:
+  build_apk:
+    runs-on: ubuntu-latest # Uses a clean, cloud-hosted Linux machine
+
+    steps:
+      # 1. Pull down your repository code onto the cloud machine
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # 2. Setup the required Java environment for Android builds
+      - name: Set up Java Development Kit
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle' # Caches Gradle downloads to make future builds faster
+
+      # 3. Setup the Flutter environment
+      - name: Set up Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable' # Uses the latest stable Flutter release
+          cache: true       # Caches Flutter dependencies to save build time
+
+      # 4. Fetch the packages listed in your pubspec.yaml
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 5. Compile the app into a release APK
+      - name: Build Release APK
+        run: flutter build apk --release
+
+      # 6. Extract the APK out of the virtual runner so you can download it
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-release-apk # The name of the zip file you will download
+          path: build/app/outputs/flutter-apk/app-release.apk
